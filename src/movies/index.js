@@ -6,7 +6,8 @@ const multer = require("multer")
 const { Transform } = require("json2csv");
 const { check, validationResult, sanitizeBody } = require("express-validator")
 const generatePDF = require("../lib/generate-pdf")
-
+const FetchAllMovie = require("../external-api/")
+const FetchAllMovies = require("../external-api/allmovies")
 // const emailHelper = require("../mail/mail-poster")
 
 const moviesJsonPath = path.join(__dirname, "movies.json");
@@ -112,14 +113,15 @@ const csvPath = path.join(__dirname, `../../images/${csvName}.csv`)
  * Get Movies by imdbID
  */
 router.get("/:imdbID", async (req, res)=>{
-    const movies = await getMovies()
-    const movie = movies.find(b => b.imdbID === req.params.imdbID);
-    if (movie)
-        res.send(movie)
-    else
-        res.status(404).send("Movie Not found")
+    // we get from a differnt source
+    const movies = await FetchAllMovie(req.params.imdbID)
+    // const movie = movies.find(b => b.imdbID === req.params.imdbID);
+    // if (movie)
+    // console.log(movies)
+        res.send(movies)
+    // else
+    //     res.status(404).send("Movie Not found")
 });
-
 
 
 /**
@@ -160,6 +162,37 @@ router.get("/:id/exportToPDF", async (req, res) => {
     "Poster": "https://m.media-amazon.com/images/M/MV5BN2EyZjM3NzUtNWUzMi00MTgxLWI0NTctMzY4M2VlOTdjZWRiXkEyXkFqcGdeQXVyNDUzOTQ5MjY@._V1_SX300.jpg"
  */
  
+
+ 
+
+
+// router.get("/:id/exportToPDF", async (req, res) => {
+//     const books = await getMovies();
+//     const book = books.find(b => b.asin === req.params.id);
+//     if (book) 
+//     await generatePDF(book);
+  
+//     const file = path.join(__dirname, `../lib/${book.asin}.pdf`);
+//     // res.download(file)
+//     //     res.send(book)
+//     // else
+//     //     res.status(404).send("Not found")
+  
+//     const { id } = req.params;
+//     console.log({ id });
+  
+//     res.setHeader("Content-Disposition", `attachment; filename=${id}.pdf`);
+  
+//     fs.createReadStream(file).pipe(res);
+//   });
+
+// POST /media/catalogue?title=whatever should return a PDF containing all the movies containing the given word in the title
+// GET /search?q=tobi+ferret
+//console.dir(req.query.q)
+// => 'tobi ferret'
+
+
+
 router.post("/",
     [check("Title").exists().withMessage("Title is required"),
     check("Year").isNumeric().withMessage("year should be exactly -> YYYY"),
@@ -173,7 +206,7 @@ router.post("/",
             res.status(400).send(errors)
         }
 
-    else {
+    else{
         const movies = await getMovies()
         const imdbCheck = movies.find(x => x.imdbID === req.body.imdbID) //get a previous element with the same asin
         if (imdbCheck) //if there is one, just abort the operation
@@ -187,10 +220,52 @@ router.post("/",
         movies.push(toAdd)
         await fs.writeFile(moviesJsonPath, JSON.stringify(movies))
         res.status(201).send(toAdd)
+
+        
+
+
+//    if (req.query && req.query.title) { 
+//     const { title } = req.query;
+    
+//     let allmoviesFromAPI = await FetchAllMovies(req.query.title)
+
+//     if (allmoviesFromAPI) 
+//     await generatePDF(allmoviesFromAPI);
+
+//     const file = path.join(__dirname, `../lib/${title}.pdf`);
+   
+
+    
+
+
+// res.setHeader("Content-Disposition", `attachment; filename=${title}.pdf`);
+
+// fs.createReadStream(file).pipe(res);
+
+// }
+
+
+
+        
+
+        
     }
 
-    });
+   });
 
+
+
+
+
+        //     const filteredUsers = usersArray.filter(
+        //       user =>
+        //         user.hasOwnProperty("name") &&
+        //         user.name.toLowerCase() === req.query.name.toLowerCase()
+        //     );
+        //     res.send(filteredUsers);
+        //   } else {
+        //     res.send(usersArray);
+      
 
 
 

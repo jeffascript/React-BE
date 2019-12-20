@@ -32,14 +32,17 @@
     CRUD for Media ( /media GET, POST, DELETE, PUT)
     CRUD for Reviews ( /reviews GET, POST, DELETE, PUT)
     Extra method for media's image upload (POST /media/{id}/upload)
-    
+
     Add an extra method to get all the reviews of a specific media (GET /media/{id}/reviews)
-    also did POST from there
+    
+    ** also did POST from there
 
 
 
     
-    [EXTRA] GET /media/:id should fetch the information from omdbapi 
+    [EXTRA] GET /media/:id should fetch the information from omdbapi (DONE)
+
+
     [EXTRA] POST /media/catalogue?title=whatever should return a PDF containing all the movies containing the given word in the title
     [EXTRA] GET /media?title=book => should return media with title containing "book" (must be possible to filter also for year and type)
     [EXTRA] GET /media should return the movies sorted by the Avg Rate value
