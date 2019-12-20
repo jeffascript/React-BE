@@ -8,8 +8,8 @@ const server = express();
 server.use(express.json());
 
 
-// server.use(cors(corsOptions));
- server.use(cors());
+server.use(cors(corsOptions));
+//  server.use(cors());
 
 
 const port = process.env.PORT || 6000
@@ -24,7 +24,7 @@ console.log(listEndpoints(server));
 
 
 
-var whitelist = ['http://localhost:3000', 'http://localhost:3001']
+var whitelist = ['http://localhost:3000', 'http://localhost:3001', 'http://jefflix.herokuapp.com/']
  var corsOptions = {
   origin: function (origin, callback) {
      if (whitelist.indexOf(origin) !== -1) {
