@@ -8,8 +8,8 @@ const server = express();
 server.use(express.json());
 
 
-//server.use(cors(corsOptions));
-server.use(cors());
+server.use(cors(corsOptions));
+// server.use(cors());
 
 
 const port = process.env.PORT || 6000
@@ -24,16 +24,16 @@ console.log(listEndpoints(server));
 
 
 
-// var whitelist = ['http://localhost:3000', http://localhost:3001']
-// var corsOptions = {
-//   origin: function (origin, callback) {
-//     if (whitelist.indexOf(origin) !== -1) {
-//       callback(null, true)
-//     } else {
-//       callback(new Error('Not allowed by CORS'))
-//     }
-//   }
-// }
+var whitelist = ['http://localhost:3000', 'http://localhost:3001']
+ var corsOptions = {
+  origin: function (origin, callback) {
+     if (whitelist.indexOf(origin) !== -1) {
+       callback(null, true)
+     } else {
+       callback(new Error('Not allowed by CORS'))
+     }
+   }
+ }
 
 
 server.get("/test", (req,res)=>{
