@@ -37,13 +37,12 @@
     
     ** also did POST from there
 
-
-
-    
     [EXTRA] GET /media/:id should fetch the information from omdbapi (DONE)
 
-
+--wip-->
     [EXTRA] POST /media/catalogue?title=whatever should return a PDF containing all the movies containing the given word in the title
+
+
     [EXTRA] GET /media?title=book => should return media with title containing "book" (must be possible to filter also for year and type)
     [EXTRA] GET /media should return the movies sorted by the Avg Rate value
     [EXTRA] POST /media/sendCatalogue?title=whatever&email=my@email.com should send and email with the catalogue that match the title to the given address

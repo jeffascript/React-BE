@@ -127,22 +127,19 @@ router.get("/:imdbID", async (req, res)=>{
 /**
  * Export the content of the movie to PDF for user
  */
-router.get("/:id/exportToPDF", async (req, res) => {
-  const books = await getMovies();
-  const book = books.find(b => b.asin === req.params.id);
-  if (book) 
-  await generatePDF(book);
+router.get("/:imdbID/exportToPDF", async (req, res) => {
+  const movies = await getMovies();
+  const movie = movies.find(b => b.imdbID === req.params.imdbID);
+  if (movie) 
+  await generatePDF(movie);
 
-  const file = path.join(__dirname, `../lib/${book.asin}.pdf`);
-  // res.download(file)
-  //     res.send(book)
-  // else
-  //     res.status(404).send("Not found")
+  const file = path.join(__dirname, `../lib/${movie.imdbID}.pdf`);
 
-  const { id } = req.params;
-  console.log({ id });
 
-  res.setHeader("Content-Disposition", `attachment; filename=${id}.pdf`);
+  const { imdbID } = req.params;
+  
+
+  res.setHeader("Content-Disposition", `attachment; filename=${imdbID}.pdf`);
 
   fs.createReadStream(file).pipe(res);
 });
