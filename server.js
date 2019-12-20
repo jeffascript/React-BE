@@ -8,8 +8,8 @@ const server = express();
 server.use(express.json());
 
 
-server.use(cors(corsOptions));
-// server.use(cors());
+// server.use(cors(corsOptions));
+ server.use(cors());
 
 
 const port = process.env.PORT || 6000
