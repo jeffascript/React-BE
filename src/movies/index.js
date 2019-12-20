@@ -230,7 +230,7 @@ router.post("/",
         const toAdd = {
             ...req.body,
             createdAt: new Date(),
-            comment_Id: uuid()
+            _Id: uuid()
         }
     
         

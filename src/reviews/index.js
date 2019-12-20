@@ -37,7 +37,7 @@ router.get("/", async (req, res)=>{
  router.get("/:id", async (req, res)=>{
     //get single review
     const comments = await getAllReviews();
-    const aComment = comments.find(x => x.elementId === req.params.id)
+    const aComment = comments.filter(x => x.elementId === req.params.id)
     if (aComment)
         res.send(aComment)
     else
